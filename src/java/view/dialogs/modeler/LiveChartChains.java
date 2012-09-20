@@ -1,7 +1,6 @@
 package view.dialogs.modeler;
 
 import controllers.ControllerConfiguration;
-import controllers.ControllerDataset;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class LiveChartChains extends JDialog {
     private LineChartLive2 lcl = null;
     private Thread threadLive = null;
     private boolean shutdown = true;
-    private int sleep = 10;
+    private int sleep = 0;
     private SubPiece subPiece = new SubPiece();
 
     //==========================================================================
@@ -64,11 +63,10 @@ public class LiveChartChains extends JDialog {
 
                         @Override
                         public void windowClosed(WindowEvent e) {
-                            System.out.println("cerrando");
-                            shutdown = false;                            
-                        }                        
+                            closeWindow();
+                        }
                     });
-                    
+
                     setTitle("Chains");
                     jTabbedPane.removeAll();
                     initialData = requestsInitialData();
@@ -77,10 +75,6 @@ public class LiveChartChains extends JDialog {
                         new SwingUtilities().fillJComboBox(jComboBox2, (Object[]) initialData.get(0));
                     }
 
-                    
-                    
-                    
-                    
                 } catch (Exception e) {
                     notifications.error("error creating chart", e);
                 } finally {
@@ -92,6 +86,26 @@ public class LiveChartChains extends JDialog {
         }.execute();
 
     } // end setupInterface
+
+    //==========================================================================
+    private void closeWindow() {
+
+        try {
+
+            System.out.println("slienfo");
+            shutdown = false;
+
+            if (threadLive != null && threadLive.isAlive()) {
+                threadLive.interrupt();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            setVisible(false);
+        }
+
+    }
 
     //==========================================================================
     private ArrayList requestsInitialData() {
@@ -149,7 +163,7 @@ public class LiveChartChains extends JDialog {
             data.add(jComboBox1.getModel().getSelectedItem().toString());
             data.add(jComboBox2.getModel().getSelectedItem().toString());
 
-            send.put("data chain live", data);
+            send.put("live chains data", data);
 
             configuration = new ControllerConfiguration().getInitialConfiguration();
             jmsp = new JMSProccessor();
@@ -204,8 +218,7 @@ public class LiveChartChains extends JDialog {
 
                     /*
                      * if(threadLive != null || threadLive.isAlive()){
-                     * threadLive.interrupt();
-                    }
+                     * threadLive.interrupt(); }
                      */
 
                     jTabbedPane.removeAll();
@@ -215,9 +228,9 @@ public class LiveChartChains extends JDialog {
                     data.add(jComboBox1.getModel().getSelectedItem().toString());
                     data.add(jComboBox2.getModel().getSelectedItem().toString());
 
-                    send.put("data chain live", data);
+                    send.put("live chains data", data);
 
-                    ArrayList response = (ArrayList) new JMSProccessor().sendReceive("data chain live", configuration.getMasterShaperServer(), "srs", configuration.getJmsTimeWaitMessage(), send);
+                    ArrayList response = (ArrayList) new JMSProccessor().sendReceive("live chains data", configuration.getMasterShaperServer(), "srs", configuration.getJmsTimeWaitMessage(), send);
                     createChart();
                     shutdown = true;
 
@@ -237,6 +250,8 @@ public class LiveChartChains extends JDialog {
     //==========================================================================
     private void live() {
 
+        sleep = Integer.parseInt(configuration.getSecondsLive()) * 1000;
+        
         threadLive = new Thread(new Runnable() {
 
             public void run() {
@@ -261,19 +276,21 @@ public class LiveChartChains extends JDialog {
 
                             if (arrayList != null) {
 
-                                if (arrayList.get(6).equals(true)) {
-                                    notifications.error(arrayList.get(7).toString(), new Exception());
+                                if (arrayList.get(0).equals(true)) {
+                                    notifications.error(arrayList.get(1).toString(), new Exception());
                                     break;
                                 }
 
-                                rtp1 = (RegularTimePeriod) arrayList.get(0);
+                                System.out.println("tipo " + arrayList.get(0));
+                                
+                                //rtp1 = (RegularTimePeriod) arrayList.get(0);
                                 tmp = arrayList.get(1).toString();
 
                                 if (rtp1 != null && tmp != null) {
                                     num = Double.parseDouble(tmp);
                                     lcl.addSeries1(rtp1, num);
                                 }
-                                
+
                                 arrayList = null;
                                 rtp1 = null;
                                 rtp2 = null;
@@ -292,6 +309,8 @@ public class LiveChartChains extends JDialog {
 
                     } //  end while
 
+                }catch(InterruptedException ie){
+                    threadLive = null;
                 } catch (Exception e) {
                     notifications.error("error in chart live", e);
                 } finally {
@@ -437,8 +456,7 @@ public class LiveChartChains extends JDialog {
 
     //==========================================================================
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        shutdown = false;
-        setVisible(false);
+        closeWindow();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //==========================================================================

@@ -14,8 +14,10 @@ import model.beans.SubPiece;
 import model.jms.JMSProccessor;
 import model.util.PieceUtilities;
 import view.dialogs.*;
+import view.dialogs.modeler.LineChartBW;
+import view.dialogs.modeler.LiveChartBandwidth;
 import view.dialogs.modeler.LiveChartChains;
-import view.dialogs.modeler.ModelerLineChart;
+import view.dialogs.modeler.LiveChartPipes;
 import view.helpers.ControlNavigators;
 import view.notifications.Alert;
 import view.notifications.Notifications;
@@ -45,7 +47,7 @@ public class MainFrame extends JFrame {
         initComponents();
         setLocationRelativeTo(getContentPane());
         onLoad();
-        jMenuItemModelerBandwidth.setVisible(false);
+        jMenuItemModelerBandwidth.setVisible(true);
 
     } // end MainFrame
 
@@ -808,7 +810,13 @@ public class MainFrame extends JFrame {
     //==========================================================================
     private void jMenuItemModelerBandwidthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModelerBandwidthActionPerformed
 
-        new ModelerLineChart(null, true, "bandwidth").setVisible(true);
+        try {
+            LiveChartBandwidth lcb = new LiveChartBandwidth(null, true);
+            lcb.setupInterface();
+            lcb.setVisible(true);
+        } catch (Exception e) {
+            notifications.error(e.getMessage(), e);
+        }        
 
     }//GEN-LAST:event_jMenuItemModelerBandwidthActionPerformed
 
@@ -826,7 +834,13 @@ public class MainFrame extends JFrame {
 
     //==========================================================================
     private void jMenuItemModelerPipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModelerPipesActionPerformed
-        new ModelerLineChart(null, true, "pipes").setVisible(true);
+        //new ModelerLineChart(null, true, "pipes").setVisible(true);
+        try {
+            LiveChartPipes lcp =new LiveChartPipes(null, true);
+            lcp.setupInterface();
+            lcp.setVisible(true);
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jMenuItemModelerPipesActionPerformed
 
     //==========================================================================

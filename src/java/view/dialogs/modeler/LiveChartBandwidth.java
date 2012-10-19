@@ -324,7 +324,7 @@ public class LiveChartBandwidth extends JDialog {
 
         jLabel3.setText("Scale:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "bits/s", "bytes/s", "kbits/s", "kbytes/s", "mbits/s", "mbyte/ss" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "bit/s", "byte/s", "kbit/s", "kbyte/s", "mbit/s", "mbyte/s" }));
 
         jButtonReload.setText("reload graph");
         jButtonReload.addActionListener(new java.awt.event.ActionListener() {

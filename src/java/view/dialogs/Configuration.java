@@ -130,7 +130,7 @@ public class Configuration extends JDialog {
             }
         });
 
-        jLabel4.setText("Used master shaper");
+        jLabel4.setText("Use shaper");
 
         jLabel5.setText("Shaper server");
 

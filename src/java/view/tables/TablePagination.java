@@ -39,7 +39,7 @@ public class TablePagination extends FactoryPanel {
     private JPanel panelFooter = null;
     private JPanel panelPagination = null;
     private int limit1 = 1;
-    private int limit2 = 25;
+    private int limit2 = 100;
     private JScrollPane scrollPane = null;
     private int totalResult = 0;
     private ArrayList arrayList = null;
@@ -150,15 +150,15 @@ public class TablePagination extends FactoryPanel {
             panelPagination = hp.getHeaderBarChart();
 
             if (finishPagination) {
-                limit2 = limit1 - 1 + 25;
+                limit2 = limit1 - 1 + 100;
                 finishPagination = false;
             }
 
-            if (totalResult <= 25) {
+            if (totalResult <= 100) {
                 hp.enableAllComponents(false);
             }
 
-            if (totalResult > 24) {
+            if (totalResult > 99) {
                 hp.enableNextButton(true);
             }
 
@@ -168,7 +168,7 @@ public class TablePagination extends FactoryPanel {
 
             if (limit1 <= 1) {
                 limit1 = 1;
-                limit2 = 25;
+                limit2 = 100;
                 hp.enableBackButton(false);
             }
 
@@ -184,8 +184,8 @@ public class TablePagination extends FactoryPanel {
             hp.addActionListenerNextButton(new ActionListener() {
 
                 public void actionPerformed(ActionEvent e) {
-                    limit1 += 25;
-                    limit2 += 25;
+                    limit1 += 100;
+                    limit2 += 100;
                     subPiece.setLimit(limit1 + "," + limit2);
                     execute();
                 }
@@ -195,8 +195,8 @@ public class TablePagination extends FactoryPanel {
             hp.addActionListenerBackButton(new ActionListener() {
 
                 public void actionPerformed(ActionEvent e) {
-                    limit1 -= 25;
-                    limit2 -= 25;
+                    limit1 -= 100;
+                    limit2 -= 100;
                     subPiece.setLimit(limit1 + "," + limit2);
                     execute();
                 }
@@ -442,7 +442,7 @@ public class TablePagination extends FactoryPanel {
             panelFooter = null;
             panelPagination = null;
             limit1 = 1;
-            limit2 = 25;
+            limit2 = 100;
             scrollPane = null;
             totalResult = 0;
             arrayList = null;

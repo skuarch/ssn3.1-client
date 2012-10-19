@@ -151,7 +151,7 @@ public class BarChartPanel extends FactoryPanel {
         try {
 
             selected = DropUtilities.getStringFromDrop(dtde);
-            
+
             if (!DropUtilities.checkDrop(selected)) {
                 return;
             }
@@ -170,7 +170,7 @@ public class BarChartPanel extends FactoryPanel {
 
             //in end to end maybe the e2eSelected has a lot of data and each data is a new tab
             if (selected.equalsIgnoreCase("End to End")) {
-                
+
                 e2eSelected = getDataList().split(",");
                 for (String string : e2eSelected) {
 
@@ -206,7 +206,7 @@ public class BarChartPanel extends FactoryPanel {
         try {
 
             view = subPiece.getView();
-            
+
             if (view.equalsIgnoreCase("Network Protocols")) {
                 newSubPiece.setNetworkProtocols(getDataList());
                 newSubPiece.setTypeProtocol(view);
@@ -243,7 +243,7 @@ public class BarChartPanel extends FactoryPanel {
                 newSubPiece.setHostname(getDataList());
             } else if (view.equalsIgnoreCase("Hostname Talkers Sources Bytes")) {
                 newSubPiece.setHostname(getDataList());
-            }else if (view.equalsIgnoreCase("End to End")) {                
+            } else if (view.equalsIgnoreCase("End to End")) {
                 newSubPiece.setE2E(getDataList());
             }
 
@@ -417,6 +417,8 @@ public class BarChartPanel extends FactoryPanel {
                         try {
                             SubPiece newSubPiece = new PieceUtilities().createSubPieceFromSubPiece(subPiece);
                             newSubPiece.isTable(true);
+                            int tmp = Integer.parseInt(subPiece.getLimit().split(",")[1]) + 75;
+                            newSubPiece.setLimit(subPiece.getLimit().split(",")[0] + "," + tmp);
                             Navigator.getInstance().addTabInSubNavigator(new TablePagination(newSubPiece));
                         } catch (Exception e) {
                             notifications.error("error opening table", e);

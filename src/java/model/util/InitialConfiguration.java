@@ -49,6 +49,7 @@ public class InitialConfiguration {
             configuration.setJmsTimeWaitMessage(60000); // 60 seconds
             configuration.setJWSPath("http://localhost:8080/ssn/ssn-app-client");
             configuration.setHelpPath("http://localhost:8080/ssn-war/help");
+            configuration.setUsedMasterShaper("no");
 
         } catch (Exception e) {
             throw e;

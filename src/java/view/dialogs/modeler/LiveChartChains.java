@@ -283,10 +283,11 @@ public class LiveChartChains extends JDialog {
 
                                 System.out.println("tipo " + arrayList.get(0));
                                 
-                                //rtp1 = (RegularTimePeriod) arrayList.get(0);
-                                tmp = arrayList.get(1).toString();
+                                rtp1 = (RegularTimePeriod) arrayList.get(3);
+                                tmp = arrayList.get(4).toString();
 
                                 if (rtp1 != null && tmp != null) {
+                                    System.out.println("num " + tmp);
                                     num = Double.parseDouble(tmp);
                                     lcl.addSeries1(rtp1, num);
                                 }

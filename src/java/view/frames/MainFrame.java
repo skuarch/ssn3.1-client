@@ -822,7 +822,7 @@ public class MainFrame extends JFrame {
 
     //==========================================================================
     private void jMenuItemModelerChainsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModelerChainsActionPerformed
-        //new ModelerLineChart(null, true, "chains").setVisible(true);
+        
         try {
             LiveChartChains lcc =new LiveChartChains(null, true);
             lcc.setupInterface();

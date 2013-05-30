@@ -159,6 +159,7 @@ public abstract class Modeler {
         HashMap hashMap = null;
 
         try {
+            
             System.out.println("nuevo " + type);
             hashMap = new PieceUtilities().subPieceToHashMap(new SubPiece());
             hashMap.put("getAllData", type);
